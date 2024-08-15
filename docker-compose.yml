@@ -1,0 +1,121 @@
+version: '3.8'
+
+services:
+  # db_alpha:
+  #   image: postgres:16.2
+  #   volumes: 
+  #     - postgres_data_alpha:/var/lib/postgresql/data/
+  #   env_file: .env
+
+  # backend:
+  #   build:
+  #     context: .
+  #   command: >
+  #     sh -c "python manage.py migrate &&
+  #            python manage.py runserver 0.0.0.0:8000"
+  #   ports:
+  #     - "8001:8000"
+  #   env_file: .env
+  #   volumes: 
+  #     - .:/usr/src/app
+  #   depends_on: 
+  #     - db_alpha
+
+  # frontend:
+  #   build:
+  #     context: ../vguard_FE/
+  #   ports:
+  #     - "81:3000"
+  #   env_file: .env
+    
+  # lpr:
+  #   image: lprimage
+  #   environment:
+  #     # - RTSP=rtsp://192.168.110.131
+  #     - RTSP=rtsp://169.254.244.202:554/1/stream1/Profile1
+  #     - BASE_URL=http://0.0.0.0:8001/
+  #   network_mode: host
+
+  # age_and_gender:
+  #   image: aagimage
+  #   environment:
+  #     # - RTSP=rtsp://192.168.110.131
+  #     - RTSP=rtsp://169.254.244.202:554/1/stream1/Profile1
+  #     - BASE_URL=http://0.0.0.0:8001/
+  #   network_mode: host
+
+  # face_recognition:
+  #   image: frimage
+  #   environment:
+  #     # - RTSP=rtsp://192.168.110.131
+  #     - RTSP=rtsp://169.254.244.202:554/1/stream1/Profile1
+  #     - BASE_URL=http://0.0.0.0:8001/
+  #   network_mode: host
+  
+  # video_summarization:
+  #   image: vsimage
+  #   environment:
+  #     # - RTSP=rtsp://192.168.110.131
+  #     - RTSP=rtsp://169.254.244.202:554/1/stream1/Profile1
+  #     - BASE_URL=http://0.0.0.0:8001/
+  #   network_mode: host
+
+  # unattended_bag:
+  #   image: ubimage
+  #   environment:
+  #     # - RTSP=rtsp://192.168.110.131
+  #     - RTSP=rtsp://169.254.244.202:554/1/stream1/Profile1
+  #     - BASE_URL=http://0.0.0.0:8001/
+  #   network_mode: host
+
+  # lpr_alpha:
+  #   image: lpr_alpha_image
+  #   environment:
+  #     - RTSP=rtsp://admin:Hsc@1062022@192.168.110.131
+  #     # - RTSP=rtsp://:8554/
+  #     - BASE_URL=http://0.0.0.0:8000/
+  #   network_mode: host
+  #   restart : always
+
+  # lpr_alpha_exit:
+  #   image: lpr_alpha_runtime_comp
+  #   environment:
+  #     - RTSP=rtsp://admin:Hsc@1062022@192.168.110.130
+  #     - CAMERA_ID=2
+  #     # - BASE_URL=http://0.0.0.0:8001/
+  #     - BASE_URL=http://127.0.0.1:8000/
+  #     - POLYGON_ZONE=exit
+  #   network_mode: host
+  #   # restart : always
+  #   deploy:
+  #     resources:
+  #       limits:
+  #         cpus: '2.0'
+  #         memory: '4g'
+  #   mem_limit: 4g   # Set the memory limit
+  #   memswap_limit: -1 # set -1 to unlimited swap
+  #   runtime: nvidia
+  
+  lpr_alpha_entrance:
+    image: lpr_alpha_runtime_comp
+    environment:
+      - RTSP=rtsp://admin:Hsc@1062022@192.168.110.131
+      - CAMERA_ID=2
+      # - BASE_URL=http://0.0.0.0:8001/
+      - BASE_URL=http://127.0.0.1:8000/
+      - POLYGON_ZONE=entrance
+    network_mode: host
+    # restart : always
+    deploy:
+      resources:
+        limits:
+          cpus: '2.0'
+          memory: '8g'
+    mem_limit: 8g   # Set the memory limit
+    memswap_limit: -1
+    runtime: nvidia
+  
+  
+
+volumes:
+  postgres_data_alpha:
